@@ -13,7 +13,9 @@
   "author": "Brad Traversy",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.1"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
