@@ -10,6 +10,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
@@ -27,7 +28,10 @@ const router = createBrowserRouter(
       <Route path='/cart' element={<CartScreen />} />
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
-      <Route path='/shipping' element={<ShippingScreen />} />
+      {/* Registered users */}
+      <Route path='' element={<PrivateRoute />}>
+        <Route path='/shipping' element={<ShippingScreen />} />
+      </Route>
     </Route>
   )
 );
