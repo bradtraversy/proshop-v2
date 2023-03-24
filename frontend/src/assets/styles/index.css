@@ -22,3 +22,8 @@ main {
   text-overflow: ellipsis; /* Add ellipsis for long text */
   white-space: nowrap; /* Prevent wrapping */
 }
+
+table td,
+table th {
+  text-align: center;
+}
