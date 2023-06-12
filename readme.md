@@ -130,6 +130,12 @@ string.
 
 > Code changes can be seen in [SearchBox.jsx](./frontend/src/components/SearchBox.jsx)
 
+### Bug: All file types are allowed when updating product images
+
+When updating product images as an Admin user, all file types are allowed. We only want to upload image files. This is fixed by using a fileFilter function and sending back an appropriate error when the wrong file type is uploaded.
+
+> Code changes can be seen in [uploadRoutes.js](./backend/routes/uploadRoutes.js)
+
 ---
 
 ## License
