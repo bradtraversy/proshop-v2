@@ -132,7 +132,11 @@ string.
 
 ### Bug: All file types are allowed when updating product images
 
-When updating product images as an Admin user, all file types are allowed. We only want to upload image files. This is fixed by using a fileFilter function and sending back an appropriate error when the wrong file type is uploaded.
+When updating and uploading product images as an Admin user, all file types are allowed. We only want to upload image files. This is fixed by using a fileFilter function and sending back an appropriate error when the wrong file type is uploaded.
+
+You may see that our `checkFileType` function is declared but never actually
+used, this change fixes that. The function has been renamed to `fileFilter` and
+passed to the instance of [ multer ](https://github.com/expressjs/multer#filefilter)
 
 > Code changes can be seen in [uploadRoutes.js](./backend/routes/uploadRoutes.js)
 
