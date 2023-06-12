@@ -96,6 +96,8 @@ jane@email.com (Customer)
 123456
 ```
 
+---
+
 # Bug Fixes, corrections and code FAQ
 
 The code here in the main branch has been updated since the course was published to fix bugs found by students of the course and answer common questions, if you are looking to compare your code to that from the course lessons then
@@ -106,7 +108,7 @@ and adopt the changes and corrections.
 An easy way of seeing all the changes and fixes is to use a note highlighter
 extension such as [This one for VSCode](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight) or [this one for Vim](https://github.com/folke/todo-comments.nvim) Where by you can easily list all the **NOTE:** and **FIX:** tags in the comments.
 
-#### BUG: Warnings on ProfileScreen
+### BUG: Warnings on ProfileScreen
 
 We see the following warning in the browser console..
 
@@ -117,6 +119,18 @@ and
 `warning: Received 'true' for a non-boolean attribute table.`
 
 > Code changes can be seen in [ProfileScreen.jsx](./frontend/src/screens/ProfileScreen.jsx)
+
+### BUG: Changing an uncontrolled input to be controlled
+
+In our SearchBox input, it's possible that our `urlKeyword` is **undefined**, in
+which case our initial state will be **undefined** and we will have an
+uncontrolled input initially i.e. not bound to state.
+In the case of `urlKeyword` being **undefined** we can set state to an empty
+string.
+
+> Code changes can be seen in [SearchBox.jsx](./frontend/src/components/SearchBox.jsx)
+
+---
 
 ## License
 
