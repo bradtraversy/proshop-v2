@@ -96,6 +96,28 @@ jane@email.com (Customer)
 123456
 ```
 
+# Bug Fixes, corrections and code FAQ
+
+The code here in the main branch has been updated since the course was published to fix bugs found by students of the course and answer common questions, if you are looking to compare your code to that from the course lessons then
+please refer to the [originalcoursecode](https://github.com/bradtraversy/proshop-v2/tree/originalCourseCode) branch of this repository.
+
+There are detailed notes in the comments that will hopefully help you understand
+and adopt the changes and corrections.
+An easy way of seeing all the changes and fixes is to use a note highlighter
+extension such as [This one for VSCode](https://marketplace.visualstudio.com/items?itemName=wayou.vscode-todo-highlight) or [this one for Vim](https://github.com/folke/todo-comments.nvim) Where by you can easily list all the **NOTE:** and **FIX:** tags in the comments.
+
+#### BUG: Warnings on ProfileScreen
+
+We see the following warning in the browser console..
+
+`<tD> cannot appear as a child of <tr>.`
+
+and
+
+`warning: Received 'true' for a non-boolean attribute table.`
+
+> Code changes can be seen in [ProfileScreen.jsx](./frontend/src/screens/ProfileScreen.jsx)
+
 ## License
 
 The MIT License
