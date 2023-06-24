@@ -130,7 +130,7 @@ string.
 
 > Code changes can be seen in [SearchBox.jsx](./frontend/src/components/SearchBox.jsx)
 
-### Bug: All file types are allowed when updating product images
+### BUG: All file types are allowed when updating product images
 
 When updating and uploading product images as an Admin user, all file types are allowed. We only want to upload image files. This is fixed by using a fileFilter function and sending back an appropriate error when the wrong file type is uploaded.
 
@@ -139,6 +139,38 @@ used, this change fixes that. The function has been renamed to `fileFilter` and
 passed to the instance of [ multer ](https://github.com/expressjs/multer#filefilter)
 
 > Code changes can be seen in [uploadRoutes.js](./backend/routes/uploadRoutes.js)
+
+### BUG: Throwing error from productControllers will not give a custom error response
+
+In section **3 - Custom Error Middleware** we throw an error from our
+`getProductById` controller function, with a _custom_ message.
+However if we have a invalid **ObjectId** as `req.params.id` and use that to
+query our products in the database, Mongoose will throw and error before we
+reach the line of code where we throw our own error.
+
+#### Original code
+
+```js
+const getProductById = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    return res.json(product);
+  }
+  // NOTE: the following will never run if we have an invalid ObjectId
+  res.status(404);
+  throw new Error('Resource not found');
+});
+```
+
+Instead what we can do is if we do want to check for an invalid ObjectId is use
+a built in method from Mongoose - [isValidObjectId](<https://mongoosejs.com/docs/api/mongoose.html#Mongoose.prototype.isValidObjectId()>)
+There are a number of places in the project where we may want to check we are
+getting a valid ObjectId, so we can extract this logic to it's own middleware
+and drop it in to any route handler that needs it.  
+This also removes the need to check for a cast error in our errorMiddleware and
+is a little more explicit in checking fo such an error.
+
+> Changes can be seen in [errorMiddleware.js](./backend/middleware/errorMiddleware.js), [productRoutes.js](./backend/routes/productRoutes.js), [productController.js]('./backend/controllers/productController.js') and [checkObjectId.js]('./backend/middleware/checkObjectId.js')
 
 ---
 
