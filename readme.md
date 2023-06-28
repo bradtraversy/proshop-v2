@@ -271,7 +271,7 @@ export default defineConfig({
 By default the eslint config that comes with a Vite React project treats some
 rules from React as errors which will break your app if you are following Brad exactly.
 You can change those rules to give a warning instead of an error by modifying
-your the **eslintrc.cjs** that came with your Vite project.
+the **eslintrc.cjs** that came with your Vite project.
 
 ```js
 module.exports = {
@@ -317,8 +317,8 @@ app.use(express.static(path.join(__dirname, '/frontend/dist')));
 
 In a CRA project you run `npm start` to run the development server, in Vite you
 start the development serer with `npm run dev`  
-If you are using the **dev** script in your root pacakgejson to run the project
-using concurrently, then you will also need to change your roo package.json
+If you are using the **dev** script in your root pacakge.json to run the project
+using concurrently, then you will also need to change your root package.json
 scripts from...
 
 ```json
