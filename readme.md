@@ -316,7 +316,7 @@ app.use(express.static(path.join(__dirname, '/frontend/dist')));
 #### Vite has a different script to run the dev server
 
 In a CRA project you run `npm start` to run the development server, in Vite you
-start the development serer with `npm run dev`  
+start the development server with `npm run dev`  
 If you are using the **dev** script in your root pacakge.json to run the project
 using concurrently, then you will also need to change your root package.json
 scripts from...
