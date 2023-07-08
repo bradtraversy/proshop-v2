@@ -44,10 +44,11 @@ table th {
 }
 
 .carousel-caption {
-  position: absolute;
+  position: absolute !important;
   width: 100%;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  padding-bottom: 2rem !important;
   background: rgba(0, 0, 0, 0.5);
 }
