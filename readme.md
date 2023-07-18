@@ -10,26 +10,27 @@ This is version 2.0 of the app, which uses Redux Toolkit. The first version can 
 
 <!-- toc -->
 
-- [Features](#features)
-- [Usage](#usage)
-  - [Env Variables](#env-variables)
-  - [Install Dependencies (frontend & backend)](#install-dependencies-frontend--backend)
-  - [Run](#run)
-- [Build & Deploy](#build--deploy)
-  - [Seed Database](#seed-database)
-
-* [Bug Fixes, corrections and code FAQ](#bug-fixes-corrections-and-code-faq)
-  - [BUG: Warnings on ProfileScreen](#bug-warnings-on-profilescreen)
-  - [BUG: Changing an uncontrolled input to be controlled](#bug-changing-an-uncontrolled-input-to-be-controlled)
-  - [BUG: All file types are allowed when updating product images](#bug-all-file-types-are-allowed-when-updating-product-images)
-  - [BUG: Throwing error from productControllers will not give a custom error response](#bug-throwing-error-from-productcontrollers-will-not-give-a-custom-error-response)
-    - [Original code](#original-code)
-  - [FAQ: How do I use Vite instead of CRA?](#faq-how-do-i-use-vite-instead-of-cra)
-    - [Setting up the proxy](#setting-up-the-proxy)
-    - [Setting up linting](#setting-up-linting)
-    - [Vite outputs the build to /dist](#vite-outputs-the-build-to-dist)
-    - [Vite has a different script to run the dev server](#vite-has-a-different-script-to-run-the-dev-server)
-    - [A final note:](#a-final-note)
+  * [Features](#features)
+  * [Usage](#usage)
+    + [Env Variables](#env-variables)
+    + [Install Dependencies (frontend & backend)](#install-dependencies-frontend--backend)
+    + [Run](#run)
+  * [Build & Deploy](#build--deploy)
+    + [Seed Database](#seed-database)
+- [Bug Fixes, corrections and code FAQ](#bug-fixes-corrections-and-code-faq)
+    + [BUG: Warnings on ProfileScreen](#bug-warnings-on-profilescreen)
+    + [BUG: Changing an uncontrolled input to be controlled](#bug-changing-an-uncontrolled-input-to-be-controlled)
+    + [BUG: All file types are allowed when updating product images](#bug-all-file-types-are-allowed-when-updating-product-images)
+    + [BUG: Throwing error from productControllers will not give a custom error response](#bug-throwing-error-from-productcontrollers-will-not-give-a-custom-error-response)
+      - [Original code](#original-code)
+    + [BUG: Bad responses not handled in the frontend](#bug-bad-responses-not-handled-in-the-frontend)
+      - [Example from PlaceOrderScreen.jsx](#example-from-placeorderscreenjsx)
+    + [FAQ: How do I use Vite instead of CRA?](#faq-how-do-i-use-vite-instead-of-cra)
+      - [Setting up the proxy](#setting-up-the-proxy)
+      - [Setting up linting](#setting-up-linting)
+      - [Vite outputs the build to /dist](#vite-outputs-the-build-to-dist)
+      - [Vite has a different script to run the dev server](#vite-has-a-different-script-to-run-the-dev-server)
+      - [A final note:](#a-final-note)
   * [License](#license)
 
 <!-- tocstop -->
@@ -197,6 +198,41 @@ This also removes the need to check for a cast error in our errorMiddleware and
 is a little more explicit in checking fo such an error.
 
 > Changes can be seen in [errorMiddleware.js](./backend/middleware/errorMiddleware.js), [productRoutes.js](./backend/routes/productRoutes.js), [productController.js]('./backend/controllers/productController.js') and [checkObjectId.js](./backend/middleware/checkObjectId.js)
+
+### BUG: Bad responses not handled in the frontend
+
+There are a few cases in our frontend where if we get a bad response from our
+API then we try and render the error object.
+This you cannot do in React - if you are seeing an error along the lines of
+**Objects are not valid as a React child** and the app breaks for you, then this
+is likely the fix you need.
+
+#### Example from PlaceOrderScreen.jsx
+
+```jsx
+<ListGroup.Item>
+  {error && <Message variant='danger'>{error}</Message>}
+</ListGroup.Item>
+```
+
+In the above code we check for a error that we get from our [useMutation](https://redux-toolkit.js.org/rtk-query/usage/mutations)
+hook. This will be an object though which we cannot render in React, so here we
+need the message we sent back from our API server...
+
+```jsx
+<ListGroup.Item>
+  {error && <Message variant='danger'>{error.data.message}</Message>}
+</ListGroup.Item>
+```
+
+The same is true for [handling errors from our RTK queries.](https://redux-toolkit.js.org/rtk-query/usage/error-handling)
+
+> Changes can be seen in:-
+>
+> - [PlaceOrderScreen.jsx](./frontend/src/screens/PlaceOrderScreen.jsx)
+> - [OrderScreen.jsx](./frontend/src/screens/OrderScreen.jsx)
+> - [ProductEditScreen.jsx](./frontend/src/screens/admin/ProductEditScreen.jsx)
+> - [ProductListScreen.jsx](./frontend/src/screens/admin/ProductListScreen.jsx)
 
 ### FAQ: How do I use Vite instead of CRA?
 
