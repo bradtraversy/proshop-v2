@@ -50,10 +50,8 @@ const OrderScreen = () => {
         });
         paypalDispatch({ type: 'setLoadingStatus', value: 'pending' });
       };
-      if (order && !order.isPaid) {
-        if (!window.paypal) {
-          loadPaypalScript();
-        }
+      if (order && !order.isPaid && !window.paypal) {
+        loadPaypalScript();
       }
     }
   }, [errorPayPal, loadingPayPal, order, paypal, paypalDispatch]);
@@ -232,7 +230,7 @@ const OrderScreen = () => {
                           createOrder={createOrder}
                           onApprove={onApprove}
                           onError={onError}
-                        ></PayPalButtons>
+                        />
                       </div>
                     </div>
                   )}

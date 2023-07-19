@@ -11,7 +11,7 @@ const Loader = () => {
         margin: 'auto',
         display: 'block',
       }}
-    ></Spinner>
+    />
   );
 };
 

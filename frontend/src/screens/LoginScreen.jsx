@@ -53,7 +53,7 @@ const LoginScreen = () => {
             placeholder='Enter email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
+          />
         </Form.Group>
 
         <Form.Group className='my-2' controlId='password'>
@@ -63,7 +63,7 @@ const LoginScreen = () => {
             placeholder='Enter password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
+          />
         </Form.Group>
 
         <Button disabled={isLoading} type='submit' variant='primary'>
