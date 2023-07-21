@@ -202,7 +202,7 @@ const ProductScreen = () => {
                           required
                           value={comment}
                           onChange={(e) => setComment(e.target.value)}
-                        ></Form.Control>
+                        />
                       </Form.Group>
                       <Button
                         disabled={loadingProductReview}
