@@ -1,5 +1,6 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import Order from '../models/orderModel.js';
+import { paypal } from '../utils/paypal.js';
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -65,25 +66,42 @@ const getOrderById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Update order to paid
-// @route   GET /api/orders/:id/pay
-// @access  Private
-const updateOrderToPaid = asyncHandler(async (req, res) => {
+const createPaypalOrder = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
-
   if (order) {
-    order.isPaid = true;
-    order.paidAt = Date.now();
-    order.paymentResult = {
-      id: req.body.id,
-      status: req.body.status,
-      update_time: req.body.update_time,
-      email_address: req.body.payer.email_address,
-    };
+    try {
+      const paypalOrder = await paypal.createOrder(order.totalPrice);
+      res.json(paypalOrder);
+    } catch (err) {
+      res.status(500);
+      throw new Error(err.message);
+    }
+  } else {
+    res.status(404);
+    throw new Error('Order not found');
+  }
+});
 
-    const updatedOrder = await order.save();
+const capturePaypalOrder = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    const { orderID } = req.body;
+    try {
+      const captureData = await paypal.capturePayment(orderID);
+      order.isPaid = true;
+      order.paidAt = Date.now();
+      order.paymentResult = {
+        id: captureData.id,
+        update_time: captureData.update_time,
+        email_address: captureData.payer.email_address,
+      };
 
-    res.json(updatedOrder);
+      const updatedOrder = await order.save();
+      res.json(updatedOrder);
+    } catch (err) {
+      res.status(500);
+      throw new Error(err.message);
+    }
   } else {
     res.status(404);
     throw new Error('Order not found');
@@ -121,7 +139,8 @@ export {
   addOrderItems,
   getMyOrders,
   getOrderById,
-  updateOrderToPaid,
   updateOrderToDelivered,
   getOrders,
+  capturePaypalOrder,
+  createPaypalOrder,
 };
