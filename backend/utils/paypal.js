@@ -37,10 +37,7 @@ export async function checkIfNewTransaction(orderModel, paypalTransactionId) {
     });
 
     // If there are no such orders, then it's a new transaction.
-    if (orders.length === 0) {
-      return true;
-    }
-    return false;
+    return orders.length === 0;
   } catch (err) {
     console.error(err);
   }
