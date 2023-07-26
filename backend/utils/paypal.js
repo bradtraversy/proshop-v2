@@ -29,6 +29,23 @@ async function getPayPalAccessToken() {
   return json.access_token;
 }
 
+export async function checkIfNewTransaction(orderModel, paypalTransactionId) {
+  try {
+    // Find all documents where Order.paymentResult.id is the same as the id passed paypalTransactionId
+    const orders = await orderModel.find({
+      'paymentResult.id': paypalTransactionId,
+    });
+
+    // If there are no such orders, then it's a new transaction.
+    if (orders.length === 0) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function verifyPayPalPayment(paypalTransactionId) {
   const accessToken = await getPayPalAccessToken();
   const paypalResponse = await fetch(
