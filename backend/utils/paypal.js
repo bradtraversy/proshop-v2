@@ -42,6 +42,9 @@ export async function verifyPayPalPayment(paypalTransactionId) {
   );
   if (!paypalResponse.ok) throw new Error('Failed to verify payment');
 
-  const { status } = await paypalResponse.json();
-  return status === 'COMPLETED';
+  const paypalData = await paypalResponse.json();
+  return {
+    verified: paypalData.status === 'COMPLETED',
+    value: paypalData.purchase_units[0].amount.value,
+  };
 }
