@@ -14,6 +14,11 @@ const addOrderItems = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error('No order items');
   } else {
+    // NOTE: here we must assume that the orderItems from our client contain an
+    // incorrect price. We must only trust the price of the item as it exists in
+    // our DB. This prevents a user paying whatever they want by hacking our client
+    // side code - https://gist.github.com/bushblade/725780e6043eaf59415fbaf6ca7376ff
+
     const itemsFromDB = await Product.find({
       _id: { $in: orderItems.map((x) => x._id) },
     });
@@ -22,7 +27,6 @@ const addOrderItems = asyncHandler(async (req, res) => {
       const matchingItemFromDB = itemsFromDB.find(
         (itemFromDB) => itemFromDB._id.toString() === itemFromClient._id
       );
-
       return {
         ...itemFromClient,
         product: itemFromClient._id,
