@@ -1,7 +1,6 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import Order from '../models/orderModel.js';
-import https from 'https';
-import getPayPalAccessToken from '../utils/getPayPalAccessToken.js';
+import { verifyPayPalPayment } from '../utils/paypal.js';
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -71,28 +70,10 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id/pay
 // @access  Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  // console.log('paypal details', req.body);
-  // console.log('paypal payment id', req.body.id);
-  // BUG: user can mark order as paid without paying
-  // here we neeed to verify the payment was maid
-  // Make a request to paypal using the payment id and check that it has been
-  // paid and the amount matches the order amount
-
-  const base64Authorization = Buffer.from(
-    `${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_SECRET}`
-  ).toString();
-
-  const paypalResponse = await fetch(
-    `${process.env.PAYPAL_API_URL}/checkout/orders/${req.body.id}`,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${base64Authorization}`,
-      },
-    }
-  );
-  const paypalOrderDetails = await paypalResponse.json();
-  console.log('paypal response', paypalOrderDetails);
+  // NOTE: here we need to verify the payment was made to PayPal before marking
+  // the order as paid
+  const verified = await verifyPayPalPayment(req.body.id);
+  if (!verified) throw new Error('Failed to verify payment');
 
   const order = await Order.findById(req.params.id);
 

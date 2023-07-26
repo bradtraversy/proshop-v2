@@ -59,10 +59,7 @@ const OrderScreen = () => {
   }, [errorPayPal, loadingPayPal, order, paypal, paypalDispatch]);
 
   function onApprove(data, actions) {
-    console.log('paypal data', data);
-    console.log('paypal actions', actions);
     return actions.order.capture().then(async function (details) {
-      console.log('paypal details', details);
       try {
         await payOrder({ orderId, details });
         refetch();
