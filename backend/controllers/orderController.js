@@ -19,10 +19,12 @@ const addOrderItems = asyncHandler(async (req, res) => {
     // our DB. This prevents a user paying whatever they want by hacking our client
     // side code - https://gist.github.com/bushblade/725780e6043eaf59415fbaf6ca7376ff
 
+    // get the ordered items from our database
     const itemsFromDB = await Product.find({
       _id: { $in: orderItems.map((x) => x._id) },
     });
 
+    // map over the order items and use the price from our items from database
     const dbOrderItems = orderItems.map((itemFromClient) => {
       const matchingItemFromDB = itemsFromDB.find(
         (itemFromDB) => itemFromDB._id.toString() === itemFromClient._id
@@ -35,6 +37,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
       };
     });
 
+    // calculate prices
     const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
       calcPrices(dbOrderItems);
 
