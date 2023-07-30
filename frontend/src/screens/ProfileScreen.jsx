@@ -111,7 +111,7 @@ const ProfileScreen = () => {
             {error?.data?.message || error.error}
           </Message>
         ) : (
-          <Table striped table hover responsive className='table-sm'>
+          <Table striped hover responsive className='table-sm'>
             <thead>
               <tr>
                 <th>ID</th>
@@ -125,7 +125,7 @@ const ProfileScreen = () => {
             <tbody>
               {orders.map((order) => (
                 <tr key={order._id}>
-                  <tD>{order._id}</tD>
+                  <td>{order._id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
                   <td>{order.totalPrice}</td>
                   <td>
