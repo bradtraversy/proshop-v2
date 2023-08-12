@@ -351,9 +351,9 @@ module.exports = {
 
 #### Vite outputs the build to /dist
 
-Create React App by default ouputs the build to a **/build** directory and this is
+Create React App by default outputs the build to a **/build** directory and this is
 what we serve from our backend in production.  
-Vite by default outputs the build to to a **/dist** directory so we need to make
+Vite by default outputs the build to a **/dist** directory so we need to make
 some adjustments to our [backend/server.js](./backend/server.js)
 Change...
 
