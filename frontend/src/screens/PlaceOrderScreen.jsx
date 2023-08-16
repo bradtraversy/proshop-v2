@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,8 @@ import { clearCartItems } from '../slices/cartSlice';
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
+
+  const currentPath = useLocation().pathname;
 
   const cart = useSelector((state) => state.cart);
 
@@ -83,7 +85,9 @@ const PlaceOrderScreen = () => {
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
+                          <Link
+                            to={`/product/${item._id}?goBackPath=${currentPath}`}
+                          >
                             {item.name}
                           </Link>
                         </Col>

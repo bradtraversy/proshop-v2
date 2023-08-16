@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,8 @@ import {
 
 const OrderScreen = () => {
   const { id: orderId } = useParams();
+
+  const currentPath = useLocation().pathname;
 
   const {
     data: order,
@@ -166,7 +168,9 @@ const OrderScreen = () => {
                           />
                         </Col>
                         <Col>
-                          <Link to={`/product/${item.product}`}>
+                          <Link
+                            to={`/product/${item.product}?goBackPath=${currentPath}`}
+                          >
                             {item.name}
                           </Link>
                         </Col>
