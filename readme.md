@@ -367,6 +367,22 @@ to...
 app.use(express.static(path.join(__dirname, '/frontend/dist')));
 ```
 
+and...
+
+```js
+app.get('*', (req, res) =>
+  res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+);
+```
+
+to...
+
+```js
+app.get('*', (req, res) =>
+  res.sendFile(path.resolve(__dirname, 'frontend', 'dist', 'index.html'))
+);
+```
+
 #### Vite has a different script to run the dev server
 
 In a CRA project you run `npm start` to run the development server, in Vite you
