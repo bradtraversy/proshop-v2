@@ -10,29 +10,29 @@ This is version 2.0 of the app, which uses Redux Toolkit. The first version can 
 
 <!-- toc -->
 
-- [Features](#features)
-- [Usage](#usage)
-  - [Env Variables](#env-variables)
-  - [Install Dependencies (frontend & backend)](#install-dependencies-frontend--backend)
-  - [Run](#run)
-- [Build & Deploy](#build--deploy)
-  - [Seed Database](#seed-database)
-
-* [Bug Fixes, corrections and code FAQ](#bug-fixes-corrections-and-code-faq)
-  - [BUG: Warnings on ProfileScreen](#bug-warnings-on-profilescreen)
-  - [BUG: Changing an uncontrolled input to be controlled](#bug-changing-an-uncontrolled-input-to-be-controlled)
-  - [BUG: All file types are allowed when updating product images](#bug-all-file-types-are-allowed-when-updating-product-images)
-  - [BUG: Throwing error from productControllers will not give a custom error response](#bug-throwing-error-from-productcontrollers-will-not-give-a-custom-error-response)
-    - [Original code](#original-code)
-  - [BUG: Bad responses not handled in the frontend](#bug-bad-responses-not-handled-in-the-frontend)
-    - [Example from PlaceOrderScreen.jsx](#example-from-placeorderscreenjsx)
-  - [BUG: After switching users, our new user gets the previous users cart](#bug-after-switching-users-our-new-user-gets-the-previous-users-cart)
-  - [FAQ: How do I use Vite instead of CRA?](#faq-how-do-i-use-vite-instead-of-cra)
-    - [Setting up the proxy](#setting-up-the-proxy)
-    - [Setting up linting](#setting-up-linting)
-    - [Vite outputs the build to /dist](#vite-outputs-the-build-to-dist)
-    - [Vite has a different script to run the dev server](#vite-has-a-different-script-to-run-the-dev-server)
-    - [A final note:](#a-final-note)
+  * [Features](#features)
+  * [Usage](#usage)
+    + [Env Variables](#env-variables)
+    + [Install Dependencies (frontend & backend)](#install-dependencies-frontend--backend)
+    + [Run](#run)
+  * [Build & Deploy](#build--deploy)
+    + [Seed Database](#seed-database)
+- [Bug Fixes, corrections and code FAQ](#bug-fixes-corrections-and-code-faq)
+    + [BUG: Warnings on ProfileScreen](#bug-warnings-on-profilescreen)
+    + [BUG: Changing an uncontrolled input to be controlled](#bug-changing-an-uncontrolled-input-to-be-controlled)
+    + [BUG: All file types are allowed when updating product images](#bug-all-file-types-are-allowed-when-updating-product-images)
+    + [BUG: Throwing error from productControllers will not give a custom error response](#bug-throwing-error-from-productcontrollers-will-not-give-a-custom-error-response)
+      - [Original code](#original-code)
+    + [BUG: Bad responses not handled in the frontend](#bug-bad-responses-not-handled-in-the-frontend)
+      - [Example from PlaceOrderScreen.jsx](#example-from-placeorderscreenjsx)
+    + [BUG: After switching users, our new user gets the previous users cart](#bug-after-switching-users-our-new-user-gets-the-previous-users-cart)
+    + [BUG: Passing a string value to our `addDecimals` function](#bug-passing-a-string-value-to-our-adddecimals-function)
+    + [FAQ: How do I use Vite instead of CRA?](#faq-how-do-i-use-vite-instead-of-cra)
+      - [Setting up the proxy](#setting-up-the-proxy)
+      - [Setting up linting](#setting-up-linting)
+      - [Vite outputs the build to /dist](#vite-outputs-the-build-to-dist)
+      - [Vite has a different script to run the dev server](#vite-has-a-different-script-to-run-the-dev-server)
+      - [A final note:](#a-final-note)
   * [License](#license)
 
 <!-- tocstop -->
@@ -251,6 +251,19 @@ The solution is to simply clear local storage entirely and so remove the
 > - [authSlice.js](./frontend/src/slices/authSlice.js)
 > - [cartSlice.js](./frontend/src/slices/cartSlice.js)
 > - [Header.jsx](./frontend/src/components/Header.jsx)
+
+### BUG: Passing a string value to our `addDecimals` function
+
+Our `addDecimals` function expects a **Number** type as an argument so calling
+it by passing a **String** type as the argument could produce some issues.
+It kind of works because JavaScript type coerces the string to a number when we
+try to use mathematic operators on strings. But this is prone to error and can
+be improved.
+
+> Changes can be seen in:
+>
+> - [cartUtils.js](./frontend/src/utils/cartUtils.js)
+> - [calcPrices.js](./backend/utils/calcPrices.js)
 
 ### FAQ: How do I use Vite instead of CRA?
 
