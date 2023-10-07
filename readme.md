@@ -27,6 +27,7 @@ This is version 2.0 of the app, which uses Redux Toolkit. The first version can 
       - [Example from PlaceOrderScreen.jsx](#example-from-placeorderscreenjsx)
     + [BUG: After switching users, our new user gets the previous users cart](#bug-after-switching-users-our-new-user-gets-the-previous-users-cart)
     + [BUG: Passing a string value to our `addDecimals` function](#bug-passing-a-string-value-to-our-adddecimals-function)
+    + [BUG: Token and Cookie expiration not handled in frontend](#bug-token-and-cookie-expiration-not-handled-in-frontend)
     + [FAQ: How do I use Vite instead of CRA?](#faq-how-do-i-use-vite-instead-of-cra)
       - [Setting up the proxy](#setting-up-the-proxy)
       - [Setting up linting](#setting-up-linting)
@@ -264,6 +265,28 @@ be improved.
 >
 > - [cartUtils.js](./frontend/src/utils/cartUtils.js)
 > - [calcPrices.js](./backend/utils/calcPrices.js)
+
+### BUG: Token and Cookie expiration not handled in frontend
+
+The cookie and the JWT expire after 30 days.
+However for our private routing in the client our react app simply trusts that if we have a user in local storage, then that user is authenticated.
+So we have a situation where in the client they can access private routes, but the API calls to the server fail because there is no cookie with a valid JWT.
+
+The solution is to wrap/customize the RTK [baseQuery](https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#customizing-queries-with-basequery) with our own custom functionality that will log out a user on any 401 response
+
+> Changes can be seein in:
+>
+> - [apiSlice.js](./frontend/src/slices/apiSlice.js)
+
+Additionally we can remove the following code:
+
+```js
+const expirationTime = new Date().getTime() + 30 * 24 * 60 * 60 * 1000; // 30 days
+localStorage.setItem('expirationTime', expirationTime);
+```
+
+from our [authSlice.js](./frontend/src/slices/authSlice.js) as it's never
+actually used in the project in any way.
 
 ### FAQ: How do I use Vite instead of CRA?
 
