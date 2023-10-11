@@ -28,6 +28,7 @@ This is version 2.0 of the app, which uses Redux Toolkit. The first version can 
     + [BUG: After switching users, our new user gets the previous users cart](#bug-after-switching-users-our-new-user-gets-the-previous-users-cart)
     + [BUG: Passing a string value to our `addDecimals` function](#bug-passing-a-string-value-to-our-adddecimals-function)
     + [BUG: Token and Cookie expiration not handled in frontend](#bug-token-and-cookie-expiration-not-handled-in-frontend)
+    + [BUG: Calculation of prices as decimals gives odd results](#bug-calculation-of-prices-as-decimals-gives-odd-results)
     + [FAQ: How do I use Vite instead of CRA?](#faq-how-do-i-use-vite-instead-of-cra)
       - [Setting up the proxy](#setting-up-the-proxy)
       - [Setting up linting](#setting-up-linting)
@@ -287,6 +288,34 @@ localStorage.setItem('expirationTime', expirationTime);
 
 from our [authSlice.js](./frontend/src/slices/authSlice.js) as it's never
 actually used in the project in any way.
+
+### BUG: Calculation of prices as decimals gives odd results
+
+JavaSCript uses floating point numbers for decimals which can give some funky
+results for example:
+
+```js
+0.1 + 0.2; // 0.30000000000000004 🤯
+```
+
+Or a more specific example in our application would be that our airpods have a
+`price: 89.99` and if we do:
+
+```js
+3 * 89.99; // 269.96999999999997
+```
+
+The solution would be to calculate prices in whole numbers:
+
+```js
+(3 * (89.99 * 100)) / 100; // 269.97
+```
+
+> Changes can be seein in:
+>
+> - [PlaceOrderScreen.jsx](./frontend/src/screens/PlaceOrderScreen.jsx)
+> - [cartUtils.js](./frontend/src/utils/cartUtils.js)
+> - [calcPrices.js](./backend/utils/calcPrices.js)
 
 ### FAQ: How do I use Vite instead of CRA?
 
