@@ -2,7 +2,7 @@
 
 > eCommerce platform built with the MERN stack & Redux.
 
-<img src="./frontend/public/images/screens.png">
+<img src="https://github.com/bradtraversy/proshop-v2/tree/main/frontend/public/images/screens.png">
 
 This project is part of my [MERN Stack From Scratch | eCommerce Platform](https://www.traversymedia.com/mern-stack-from-scratch) course. It is a full-featured shopping cart with PayPal & credit/debit payments. See it in action at https://www.proshopdemo.dev
 
@@ -10,31 +10,32 @@ This is version 2.0 of the app, which uses Redux Toolkit. The first version can 
 
 <!-- toc -->
 
-  * [Features](#features)
-  * [Usage](#usage)
-    + [Env Variables](#env-variables)
-    + [Install Dependencies (frontend & backend)](#install-dependencies-frontend--backend)
-    + [Run](#run)
-  * [Build & Deploy](#build--deploy)
-    + [Seed Database](#seed-database)
-- [Bug Fixes, corrections and code FAQ](#bug-fixes-corrections-and-code-faq)
-    + [BUG: Warnings on ProfileScreen](#bug-warnings-on-profilescreen)
-    + [BUG: Changing an uncontrolled input to be controlled](#bug-changing-an-uncontrolled-input-to-be-controlled)
-    + [BUG: All file types are allowed when updating product images](#bug-all-file-types-are-allowed-when-updating-product-images)
-    + [BUG: Throwing error from productControllers will not give a custom error response](#bug-throwing-error-from-productcontrollers-will-not-give-a-custom-error-response)
-      - [Original code](#original-code)
-    + [BUG: Bad responses not handled in the frontend](#bug-bad-responses-not-handled-in-the-frontend)
-      - [Example from PlaceOrderScreen.jsx](#example-from-placeorderscreenjsx)
-    + [BUG: After switching users, our new user gets the previous users cart](#bug-after-switching-users-our-new-user-gets-the-previous-users-cart)
-    + [BUG: Passing a string value to our `addDecimals` function](#bug-passing-a-string-value-to-our-adddecimals-function)
-    + [BUG: Token and Cookie expiration not handled in frontend](#bug-token-and-cookie-expiration-not-handled-in-frontend)
-    + [BUG: Calculation of prices as decimals gives odd results](#bug-calculation-of-prices-as-decimals-gives-odd-results)
-    + [FAQ: How do I use Vite instead of CRA?](#faq-how-do-i-use-vite-instead-of-cra)
-      - [Setting up the proxy](#setting-up-the-proxy)
-      - [Setting up linting](#setting-up-linting)
-      - [Vite outputs the build to /dist](#vite-outputs-the-build-to-dist)
-      - [Vite has a different script to run the dev server](#vite-has-a-different-script-to-run-the-dev-server)
-      - [A final note:](#a-final-note)
+- [Features](#features)
+- [Usage](#usage)
+  - [Env Variables](#env-variables)
+  - [Install Dependencies (frontend & backend)](#install-dependencies-frontend--backend)
+  - [Run](#run)
+- [Build & Deploy](#build--deploy)
+  - [Seed Database](#seed-database)
+
+* [Bug Fixes, corrections and code FAQ](#bug-fixes-corrections-and-code-faq)
+  - [BUG: Warnings on ProfileScreen](#bug-warnings-on-profilescreen)
+  - [BUG: Changing an uncontrolled input to be controlled](#bug-changing-an-uncontrolled-input-to-be-controlled)
+  - [BUG: All file types are allowed when updating product images](#bug-all-file-types-are-allowed-when-updating-product-images)
+  - [BUG: Throwing error from productControllers will not give a custom error response](#bug-throwing-error-from-productcontrollers-will-not-give-a-custom-error-response)
+    - [Original code](#original-code)
+  - [BUG: Bad responses not handled in the frontend](#bug-bad-responses-not-handled-in-the-frontend)
+    - [Example from PlaceOrderScreen.jsx](#example-from-placeorderscreenjsx)
+  - [BUG: After switching users, our new user gets the previous users cart](#bug-after-switching-users-our-new-user-gets-the-previous-users-cart)
+  - [BUG: Passing a string value to our `addDecimals` function](#bug-passing-a-string-value-to-our-adddecimals-function)
+  - [BUG: Token and Cookie expiration not handled in frontend](#bug-token-and-cookie-expiration-not-handled-in-frontend)
+  - [BUG: Calculation of prices as decimals gives odd results](#bug-calculation-of-prices-as-decimals-gives-odd-results)
+  - [FAQ: How do I use Vite instead of CRA?](#faq-how-do-i-use-vite-instead-of-cra)
+    - [Setting up the proxy](#setting-up-the-proxy)
+    - [Setting up linting](#setting-up-linting)
+    - [Vite outputs the build to /dist](#vite-outputs-the-build-to-dist)
+    - [Vite has a different script to run the dev server](#vite-has-a-different-script-to-run-the-dev-server)
+    - [A final note:](#a-final-note)
   * [License](#license)
 
 <!-- tocstop -->
@@ -149,7 +150,7 @@ and
 
 `warning: Received 'true' for a non-boolean attribute table.`
 
-> Code changes can be seen in [ProfileScreen.jsx](./frontend/src/screens/ProfileScreen.jsx)
+> Code changes can be seen in [ProfileScreen.jsx](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/screens/ProfileScreen.jsx)
 
 ### BUG: Changing an uncontrolled input to be controlled
 
@@ -159,7 +160,7 @@ uncontrolled input initially i.e. not bound to state.
 In the case of `urlKeyword` being **undefined** we can set state to an empty
 string.
 
-> Code changes can be seen in [SearchBox.jsx](./frontend/src/components/SearchBox.jsx)
+> Code changes can be seen in [SearchBox.jsx](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/components/SearchBox.jsx)
 
 ### BUG: All file types are allowed when updating product images
 
@@ -169,7 +170,7 @@ You may see that our `checkFileType` function is declared but never actually
 used, this change fixes that. The function has been renamed to `fileFilter` and
 passed to the instance of [ multer ](https://github.com/expressjs/multer#filefilter)
 
-> Code changes can be seen in [uploadRoutes.js](./backend/routes/uploadRoutes.js)
+> Code changes can be seen in [uploadRoutes.js](https://github.com/bradtraversy/proshop-v2/tree/main/backend/routes/uploadRoutes.js)
 
 ### BUG: Throwing error from productControllers will not give a custom error response
 
@@ -201,7 +202,7 @@ and drop it in to any route handler that needs it.
 This also removes the need to check for a cast error in our errorMiddleware and
 is a little more explicit in checking fo such an error.
 
-> Changes can be seen in [errorMiddleware.js](./backend/middleware/errorMiddleware.js), [productRoutes.js](./backend/routes/productRoutes.js), [productController.js]('./backend/controllers/productController.js') and [checkObjectId.js](./backend/middleware/checkObjectId.js)
+> Changes can be seen in [errorMiddleware.js](https://github.com/bradtraversy/proshop-v2/tree/main/backend/middleware/errorMiddleware.js), [productRoutes.js](./backend/routes/productRoutes.js), [productController.js]('./backend/controllers/productController.js') and [checkObjectId.js](./backend/middleware/checkObjectId.js)
 
 ### BUG: Bad responses not handled in the frontend
 
@@ -233,10 +234,10 @@ The same is true for [handling errors from our RTK queries.](https://redux-toolk
 
 > Changes can be seen in:-
 >
-> - [PlaceOrderScreen.jsx](./frontend/src/screens/PlaceOrderScreen.jsx)
-> - [OrderScreen.jsx](./frontend/src/screens/OrderScreen.jsx)
-> - [ProductEditScreen.jsx](./frontend/src/screens/admin/ProductEditScreen.jsx)
-> - [ProductListScreen.jsx](./frontend/src/screens/admin/ProductListScreen.jsx)
+> - [PlaceOrderScreen.jsx](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/screens/PlaceOrderScreen.jsx)
+> - [OrderScreen.jsx](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/screens/OrderScreen.jsx)
+> - [ProductEditScreen.jsx](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/screens/admin/ProductEditScreen.jsx)
+> - [ProductListScreen.jsx](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/screens/admin/ProductListScreen.jsx)
 
 ### BUG: After switching users, our new user gets the previous users cart
 
@@ -250,9 +251,9 @@ The solution is to simply clear local storage entirely and so remove the
 
 > Changes can be seen in:-
 >
-> - [authSlice.js](./frontend/src/slices/authSlice.js)
-> - [cartSlice.js](./frontend/src/slices/cartSlice.js)
-> - [Header.jsx](./frontend/src/components/Header.jsx)
+> - [authSlice.js](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/slices/authSlice.js)
+> - [cartSlice.js](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/slices/cartSlice.js)
+> - [Header.jsx](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/components/Header.jsx)
 
 ### BUG: Passing a string value to our `addDecimals` function
 
@@ -264,8 +265,8 @@ be improved.
 
 > Changes can be seen in:
 >
-> - [cartUtils.js](./frontend/src/utils/cartUtils.js)
-> - [calcPrices.js](./backend/utils/calcPrices.js)
+> - [cartUtils.js](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/utils/cartUtils.js)
+> - [calcPrices.js](https://github.com/bradtraversy/proshop-v2/tree/main/backend/utils/calcPrices.js)
 
 ### BUG: Token and Cookie expiration not handled in frontend
 
@@ -277,7 +278,7 @@ The solution is to wrap/customize the RTK [baseQuery](https://redux-toolkit.js.o
 
 > Changes can be seein in:
 >
-> - [apiSlice.js](./frontend/src/slices/apiSlice.js)
+> - [apiSlice.js](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/slices/apiSlice.js)
 
 Additionally we can remove the following code:
 
@@ -286,7 +287,7 @@ const expirationTime = new Date().getTime() + 30 * 24 * 60 * 60 * 1000; // 30 da
 localStorage.setItem('expirationTime', expirationTime);
 ```
 
-from our [authSlice.js](./frontend/src/slices/authSlice.js) as it's never
+from our [authSlice.js](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/slices/authSlice.js) as it's never
 actually used in the project in any way.
 
 ### BUG: Calculation of prices as decimals gives odd results
@@ -313,9 +314,9 @@ The solution would be to calculate prices in whole numbers:
 
 > Changes can be seein in:
 >
-> - [PlaceOrderScreen.jsx](./frontend/src/screens/PlaceOrderScreen.jsx)
-> - [cartUtils.js](./frontend/src/utils/cartUtils.js)
-> - [calcPrices.js](./backend/utils/calcPrices.js)
+> - [PlaceOrderScreen.jsx](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/screens/PlaceOrderScreen.jsx)
+> - [cartUtils.js](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/utils/cartUtils.js)
+> - [calcPrices.js](https://github.com/bradtraversy/proshop-v2/tree/main/backend/utils/calcPrices.js)
 
 ### FAQ: How do I use Vite instead of CRA?
 
@@ -419,7 +420,7 @@ module.exports = {
 Create React App by default outputs the build to a **/build** directory and this is
 what we serve from our backend in production.  
 Vite by default outputs the build to a **/dist** directory so we need to make
-some adjustments to our [backend/server.js](./backend/server.js)
+some adjustments to our [backend/server.js](https://github.com/bradtraversy/proshop-v2/tree/main/backend/server.js)
 Change...
 
 ```js
