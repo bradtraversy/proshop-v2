@@ -32,7 +32,7 @@ const HomeScreen = () => {
         <Message variant='danger'>
           {error?.data?.message || error.error}
         </Message>
-      ) : (
+      ) : data.msg ? (
         <>
           <Meta />
           <h1>Latest Products</h1>
@@ -49,6 +49,10 @@ const HomeScreen = () => {
             keyword={keyword ? keyword : ''}
           />
         </>
+      ) : (
+        <div className="NoProduct">
+          Product has not been listed
+        </div>
       )}
     </>
   );
