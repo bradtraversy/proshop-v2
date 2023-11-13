@@ -8,14 +8,16 @@ import { logout } from '../slices/authSlice';
 import SearchBox from './SearchBox';
 import logo from '../assets/logo.png';
 import { resetCart } from '../slices/cartSlice';
-
+import React, { useState, useEffect } from 'react';
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
   const [logoutApiCall] = useLogoutMutation();
 
   const logoutHandler = async () => {
@@ -30,6 +32,35 @@ const Header = () => {
       console.error(err);
     }
   };
+  useEffect(() => {
+    // Get the user's geolocation when the component mounts
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        },
+        (error) => {
+          console.error('Error getting geolocation:', error);
+        }
+      );
+    }
+  }, []);
+
+  const searchNearbyEventHandler = async () => {
+    try {
+      if (latitude && longitude) {
+        const radius = 10; // Set the radius as needed
+
+        // Navigate to the nearby hotels route with the obtained geolocation
+        navigate(`/nearby/${latitude}/${longitude}/${radius}`);
+      } else {
+        console.error('Unable to determine user location.');
+      }
+    } catch (error) {
+      console.error('Error searching nearby events:', error);
+    }
+  };
 
   return (
     <header>
@@ -37,17 +68,21 @@ const Header = () => {
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>
-              <img src={logo} alt='ProShop' />
-              ProShop
+              {/* <img src={logo} alt='ProShop' /> */}
+              Blend
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ms-auto'>
               <SearchBox />
+              <Nav.Link onClick={searchNearbyEventHandler}>
+                Nearby Events
+                 
+                </Nav.Link>
               <LinkContainer to='/cart'>
                 <Nav.Link>
-                  <FaShoppingCart /> Cart
+                   Cart
                   {cartItems.length > 0 && (
                     <Badge pill bg='success' style={{ marginLeft: '5px' }}>
                       {cartItems.reduce((a, c) => a + c.qty, 0)}

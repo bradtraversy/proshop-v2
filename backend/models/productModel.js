@@ -33,7 +33,6 @@ const productSchema = mongoose.Schema(
     },
     address: {
       type: String,
-      required: true,
     },
     postcode: {
       type: String,
@@ -48,11 +47,9 @@ const productSchema = mongoose.Schema(
       type: {
         type: String, // Don't do `{ location: { type: String } }`
         enum: ['Point'], // 'location.type' must be 'Point'
-        required: true,
       },
       coordinates: {
         type: [Number],
-        required: true,
       },
     },
     category: {
@@ -85,8 +82,12 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
-    datetime: {
-      type: Date,
+    date: {
+      type: String,
+      required: true,
+    },
+    time: {
+      type: String, // You can adjust the type based on your needs
       required: true,
     },
   },

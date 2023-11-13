@@ -17,7 +17,11 @@ const ProductEditScreen = () => {
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState('');
-  const [brand, setBrand] = useState('');
+  const [address, setAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [postcode, setPostCode] = useState(0);
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
@@ -45,14 +49,18 @@ const ProductEditScreen = () => {
         name,
         price,
         image,
-        brand,
+        address,
+        city,
+        postcode,
+        date,
+        time,
         category,
         description,
         countInStock,
       }).unwrap(); // NOTE: here we need to unwrap the Promise to catch any rejection in our catch block
       toast.success('Product updated');
       refetch();
-      navigate('/admin/productlist');
+      // navigate('/admin/productlist');
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -63,7 +71,12 @@ const ProductEditScreen = () => {
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
-      setBrand(product.brand);
+      setAddress(product.address);
+
+      setCity(product.city);
+      setPostCode(product.postcode);
+      setDate(product.date);
+      setTime(product.time);
       setCategory(product.category);
       setCountInStock(product.countInStock);
       setDescription(product.description);
@@ -133,12 +146,48 @@ const ProductEditScreen = () => {
             </Form.Group>
 
             <Form.Group controlId='brand'>
-              <Form.Label>Brand</Form.Label>
+              <Form.Label>Address</Form.Label>
               <Form.Control
                 type='text'
-                placeholder='Enter brand'
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
+                placeholder='Enter address'
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='postcode'>
+              <Form.Label>PostCode</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Enter postcode'
+                value={postcode}
+                onChange={(e) => setPostCode(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='city'>
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Enter city'
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='date'>
+              <Form.Label>Date</Form.Label>
+              <Form.Control
+                type='date'
+                placeholder='Enter date'
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='time'>
+              <Form.Label>Time</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Enter time'
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
