@@ -200,9 +200,9 @@ There are a number of places in the project where we may want to check we are
 getting a valid ObjectId, so we can extract this logic to it's own middleware
 and drop it in to any route handler that needs it.  
 This also removes the need to check for a cast error in our errorMiddleware and
-is a little more explicit in checking fo such an error.
+is a little more explicit in checking for such an error.
 
-> Changes can be seen in [errorMiddleware.js](https://github.com/bradtraversy/proshop-v2/tree/main/backend/middleware/errorMiddleware.js), [productRoutes.js](./backend/routes/productRoutes.js), [productController.js]('./backend/controllers/productController.js') and [checkObjectId.js](./backend/middleware/checkObjectId.js)
+> Changes can be seen in [errorMiddleware.js](https://github.com/bradtraversy/proshop-v2/tree/main/backend/middleware/errorMiddleware.js), [productRoutes.js](https://github.com/bradtraversy/proshop-v2/tree/main/backend/routes/productRoutes.js), [productController.js]('https://github.com/bradtraversy/proshop-v2/tree/main/backend/controllers/productController.js') and [checkObjectId.js](https://github.com/bradtraversy/proshop-v2/tree/main/backend/middleware/checkObjectId.js)
 
 ### BUG: Bad responses not handled in the frontend
 
