@@ -276,7 +276,7 @@ So we have a situation where in the client they can access private routes, but t
 
 The solution is to wrap/customize the RTK [baseQuery](https://redux-toolkit.js.org/rtk-query/usage/customizing-queries#customizing-queries-with-basequery) with our own custom functionality that will log out a user on any 401 response
 
-> Changes can be seein in:
+> Changes can be seen in:
 >
 > - [apiSlice.js](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/slices/apiSlice.js)
 
@@ -312,7 +312,7 @@ The solution would be to calculate prices in whole numbers:
 (3 * (89.99 * 100)) / 100; // 269.97
 ```
 
-> Changes can be seein in:
+> Changes can be seen in:
 >
 > - [PlaceOrderScreen.jsx](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/screens/PlaceOrderScreen.jsx)
 > - [cartUtils.js](https://github.com/bradtraversy/proshop-v2/tree/main/frontend/src/utils/cartUtils.js)
@@ -353,7 +353,7 @@ export default defineConfig({
 #### Setting up linting
 
 By default CRA outputs linting from eslint to your terminal and browser console.
-To get Vite to ouput linting to the terminal you need to add a [plugin](https://www.npmjs.com/package/vite-plugin-eslint) as a
+To get Vite to output linting to the terminal you need to add a [plugin](https://www.npmjs.com/package/vite-plugin-eslint) as a
 development dependency...
 
 ```bash
@@ -453,7 +453,7 @@ app.get('*', (req, res) =>
 
 In a CRA project you run `npm start` to run the development server, in Vite you
 start the development server with `npm run dev`  
-If you are using the **dev** script in your root pacakge.json to run the project
+If you are using the **dev** script in your root package.json to run the project
 using concurrently, then you will also need to change your root package.json
 scripts from...
 
