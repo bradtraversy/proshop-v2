@@ -9,7 +9,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col className='text-center py-3'>
-            <p>Sanaa Art Shop &copy; {currentYear}  |  {/**Adding logo */}<span><a href="https://swahilipothub.co.ke"><img src={sphLogo} height={27} width={150} alt="Swahilipot Hub"/></a></span></p>
+            <p>Sanaa Art Shop &copy; {currentYear}  |  <span><a href="https://swahilipothub.co.ke"><img src={sphLogo} height={27} width={150} alt="Swahilipot Hub"/></a></span></p>
           </Col>
         </Row>
       </Container>
