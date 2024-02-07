@@ -5,8 +5,6 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import axios from 'axios'; // Import axios for making HTTP requests
 import connectDB from './config/db.js';
-import cors from 'cors';
-import axios from 'axios'; // Import axios for making HTTP requests
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
