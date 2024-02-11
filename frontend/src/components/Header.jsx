@@ -2,7 +2,7 @@ import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
 import SearchBox from './SearchBox';
@@ -93,6 +93,38 @@ const Header = () => {
           </Navbar.Collapse>
         </Container>
       </Navbar>
+      {/** Category Menu Section */}
+      <div className="bg-light py-2">
+        <Container>
+          <div className="d-flex flex-row overflow-auto gap-4">
+            <Link to='/category/crafts/' style={{textDecoration: 'none'}}>
+              <NavDropdown.Item>Crafts</NavDropdown.Item>
+            </Link>
+            <Link to='/category/fashion/' style={{textDecoration: 'none'}}>
+              <NavDropdown.Item>Fashion</NavDropdown.Item>
+            </Link>
+            <Link to='/category/visual-arts/' style={{textDecoration: 'none'}}>
+              <NavDropdown.Item>Visual Arts</NavDropdown.Item>
+            </Link>
+            <Link to='/category/music/' style={{textDecoration: 'none'}}>
+              <NavDropdown.Item>Music</NavDropdown.Item>
+            </Link>
+            <Link to='/category/performers/' style={{textDecoration: 'none'}}>
+              <NavDropdown.Item>Performers</NavDropdown.Item>
+            </Link>
+            <Link to='/category/films/' style={{textDecoration: 'none'}}>
+              <NavDropdown.Item>Films</NavDropdown.Item>
+            </Link>
+            <Link to='/category/theatre-plays/' style={{textDecoration: 'none'}}>
+              <NavDropdown.Item>Theatre plays</NavDropdown.Item>
+            </Link>
+            <Link to='/category/digital-media/' style={{textDecoration: 'none'}}>
+              <NavDropdown.Item>Digital Media</NavDropdown.Item>
+            </Link>
+          </div>
+        </Container>
+      </div>
+      {/** Category Menu Section */}
     </header>
   );
 };
