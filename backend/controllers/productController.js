@@ -1,3 +1,6 @@
+import path from 'path';
+import { existsSync } from 'fs';
+import { unlink } from 'fs/promises';
 import asyncHandler from '../middleware/asyncHandler.js';
 import Product from '../models/productModel.js';
 
@@ -96,6 +99,13 @@ const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
   if (product) {
+    const __dirname = path.resolve();
+    if (product.image.startsWith('/uploads')) {
+      const filePath = path.join(__dirname, product.image);
+      if (existsSync(filePath)) {
+        await unlink(filePath);
+      }
+    }
     await Product.deleteOne({ _id: product._id });
     res.json({ message: 'Product removed' });
   } else {
