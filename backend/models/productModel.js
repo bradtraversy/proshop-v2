@@ -31,9 +31,26 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    brand: {
+    address: {
       type: String,
-      required: true,
+    },
+    postcode: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    location: {
+      type: {
+        type: String, // Don't do `{ location: { type: String } }`
+        enum: ['Point'], // 'location.type' must be 'Point'
+      },
+      coordinates: {
+        type: [Number],
+      },
     },
     category: {
       type: String,
@@ -43,6 +60,7 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+
     reviews: [reviewSchema],
     rating: {
       type: Number,
@@ -63,6 +81,14 @@ const productSchema = mongoose.Schema(
       type: Number,
       required: true,
       default: 0,
+    },
+    date: {
+      type: String,
+      required: true,
+    },
+    time: {
+      type: String, // You can adjust the type based on your needs
+      required: true,
     },
   },
   {

@@ -10,22 +10,23 @@ import ProductCarousel from '../components/ProductCarousel';
 import Meta from '../components/Meta';
 
 const HomeScreen = () => {
-  const { pageNumber, keyword } = useParams();
+  const { pageNumber, keyword,longitude,latitude,radius } = useParams();
 
   const { data, isLoading, error } = useGetProductsQuery({
     keyword,
     pageNumber,
+    longitude,latitude,radius
   });
 
   return (
     <>
-      {!keyword ? (
+      {/* {!keyword ? (
         <ProductCarousel />
       ) : (
         <Link to='/' className='btn btn-light mb-4'>
           Go Back
         </Link>
-      )}
+      )} */}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -35,7 +36,7 @@ const HomeScreen = () => {
       ) : (
         <>
           <Meta />
-          <h1>Latest Products</h1>
+          <h1>Latest Events</h1>
           <Row>
             {data.products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>

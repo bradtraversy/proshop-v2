@@ -4,27 +4,61 @@ import Product from '../models/productModel.js';
 // @desc    Fetch all products
 // @route   GET /api/products
 // @access  Public
+
 const getProducts = asyncHandler(async (req, res) => {
   const pageSize = process.env.PAGINATION_LIMIT;
   const page = Number(req.query.pageNumber) || 1;
 
   const keyword = req.query.keyword
     ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: 'i',
-        },
+        $or: [
+          {
+            address: {
+              $regex: req.query.keyword,
+              $options: 'i',
+            },
+          },
+          {
+            city: {
+              $regex: req.query.keyword,
+              $options: 'i',
+            },
+          },
+          {
+            postcode: {
+              $regex: req.query.keyword,
+              $options: 'i',
+            },
+          },
+        ],
       }
     : {};
 
-  const count = await Product.countDocuments({ ...keyword });
-  const products = await Product.find({ ...keyword })
+  let geolocationQuery = {};
+  if (req.query.latitude && req.query.longitude && req.query.radius) {
+    const { latitude, longitude, radius } = req.query;
+    geolocationQuery = {
+      location: {
+        $geoWithin: {
+          $centerSphere: [
+            [parseFloat(longitude), parseFloat(latitude)],
+            radius / 3963.2, // Radius in miles
+          ],
+        },
+      },
+    };
+  }
+
+  const count = await Product.countDocuments({
+    ...keyword,
+    ...geolocationQuery,
+  });
+  const products = await Product.find({ ...keyword, ...geolocationQuery })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
 
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
-
 // @desc    Fetch single product
 // @route   GET /api/products/:id
 // @access  Public
@@ -47,16 +81,36 @@ const getProductById = asyncHandler(async (req, res) => {
 // @route   POST /api/products
 // @access  Private/Admin
 const createProduct = asyncHandler(async (req, res) => {
+  const {
+    name,
+    price,
+    description,
+    image,
+    address,
+    postcode,
+    city,
+    country,
+    category,
+    countInStock,
+    numReviews,
+    date,
+    time,
+  } = req.body;
   const product = new Product({
-    name: 'Sample name',
-    price: 0,
+    name: name,
+    price: price,
     user: req.user._id,
-    image: '/images/sample.jpg',
-    brand: 'Sample brand',
-    category: 'Sample category',
-    countInStock: 0,
+    image: image,
+    category: category,
+    address: address,
+    city: city,
+    postcode: postcode,
+    country: country,
+    countInStock: countInStock,
     numReviews: 0,
-    description: 'Sample description',
+    description: description,
+    date: date,
+    time: time,
   });
 
   const createdProduct = await product.save();
@@ -67,8 +121,21 @@ const createProduct = asyncHandler(async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
-    req.body;
+  const {
+    name,
+    price,
+    description,
+    image,
+    address,
+    postcode,
+    city,
+    country,
+    category,
+    countInStock,
+    numReviews,
+    date,
+    time,
+  } = req.body;
 
   const product = await Product.findById(req.params.id);
 
@@ -77,10 +144,14 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.price = price;
     product.description = description;
     product.image = image;
-    product.brand = brand;
+    product.address = address;
+    product.postcode = postcode;
+    product.city = city;
+    product.country = country;
     product.category = category;
     product.countInStock = countInStock;
-
+    product.date = date;
+    product.time = time;
     const updatedProduct = await product.save();
     res.json(updatedProduct);
   } else {
