@@ -25,6 +25,9 @@ import { addToCart } from '../slices/cartSlice';
 const ProductScreen = () => {
   const { id: productId } = useParams();
 
+  const queryParams = new URLSearchParams(window.location.search);
+  const goBackPath = queryParams.get('goBackPath') || '/';
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -67,7 +70,7 @@ const ProductScreen = () => {
 
   return (
     <>
-      <Link className='btn btn-light my-3' to='/'>
+      <Link className='btn btn-light my-3' to={goBackPath}>
         Go Back
       </Link>
       {isLoading ? (
