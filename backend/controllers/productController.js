@@ -21,8 +21,8 @@ const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
-
-  res.json({ products, page, pages: Math.ceil(count / pageSize) });
+    !products.length ? res.json({msg: false}) :
+  res.json({ msg:true, products, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc    Fetch single product
