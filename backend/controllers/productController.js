@@ -33,7 +33,7 @@ const getProductById = asyncHandler(async (req, res) => {
   // middleware. See README for more info.
 
   const product = await Product.findById(req.params.id);
-  if (product) {
+  if (product.length>0) {
     return res.json(product);
   } else {
     // NOTE: this will run if a valid ObjectId but no product was found
