@@ -1,4 +1,4 @@
-# ProShop eCommerce Platform (v2)
+# SanaaArtShop Ecommerce Platform(v1)
 
 > eCommerce platform built with the MERN stack & Redux.
 

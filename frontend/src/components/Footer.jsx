@@ -1,4 +1,5 @@
 import { Container, Row, Col } from 'react-bootstrap';
+import sphLogo from '../assets/sph-logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -8,7 +9,7 @@ const Footer = () => {
       <Container>
         <Row>
           <Col className='text-center py-3'>
-            <p>ProShop &copy; {currentYear}</p>
+            <p>Sanaa Art Shop &copy; {currentYear}  |  <span><a href="https://swahilipothub.co.ke"><img src={sphLogo} height={27} width={150} alt="Swahilipot Hub"/></a></span></p>
           </Col>
         </Row>
       </Container>
