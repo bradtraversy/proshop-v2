@@ -1,5 +1,5 @@
 {
-  "name": "proshop2",
+  "name": "sanaaartshop",
   "version": "2.0.0",
   "type": "module",
   "description": "Ecommerce application built with the MERN stack",
@@ -35,3 +35,4 @@
     "nodemon": "^2.0.21"
   }
 }
+
