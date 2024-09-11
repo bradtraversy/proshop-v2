@@ -17,10 +17,14 @@ main {
 }
 
 .product-title {
-  height: 2.5em; /* Set a fixed height */
-  overflow: hidden; /* Hide overflow content */
-  text-overflow: ellipsis; /* Add ellipsis for long text */
-  white-space: nowrap; /* Prevent wrapping */
+  height: 2.5em;
+  /* Set a fixed height */
+  overflow: hidden;
+  /* Hide overflow content */
+  text-overflow: ellipsis;
+  /* Add ellipsis for long text */
+  white-space: nowrap;
+  /* Prevent wrapping */
 }
 
 table td,
@@ -50,4 +54,97 @@ table th {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+}
+
+.custom-dropdown,
+.btn-primary {
+  &:focus {
+    border: 0;
+    outline: 0;
+    box-shadow: none !important;
+  }
+}
+
+.dropdown-menu {
+  min-width: 7rem;
+}
+
+.hero-header {
+  background: url("../background1.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 80vh;
+  border-radius: 30px;
+}
+
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80vh;
+  padding-left: 80px;
+  width: 700px;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+}
+
+.mango {
+  animation: mango 1s infinite;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.hub {
+  animation: hub 1s infinite;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+@keyframes mango {
+  0% {
+    opacity: 1;
+    color: #198754;
+  }
+
+  50% {
+    opacity: 0.5;
+    color: #81C408;
+  }
+
+  100% {
+    opacity: 1;
+    color: #198754;
+
+  }
+}
+
+.hub {
+  animation: hub 1s infinite;
+  font-size: 50px;
+  font-weight: bold;
+
+}
+
+@keyframes hub {
+  0% {
+    opacity: 1;
+    color: #FFB524;
+  }
+
+  50% {
+    opacity: 0.5;
+    color: #ffc107;
+  }
+
+  100% {
+    opacity: 1;
+    color: #FFB524;
+
+  }
 }

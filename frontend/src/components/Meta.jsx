@@ -6,6 +6,7 @@ const Meta = ({ title, description, keywords }) => {
       <title>{title}</title>
       <meta name='description' content={description} />
       <meta name='keyword' content={keywords} />
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     </Helmet>
   );
 };
