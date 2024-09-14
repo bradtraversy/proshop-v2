@@ -12,9 +12,9 @@ const Meta = ({ title, description, keywords }) => {
 };
 
 Meta.defaultProps = {
-  title: 'Welcome To ProShop',
+  title: 'MangoHub',
   description: 'We sell the best products for cheap',
-  keywords: 'electronics, buy electronics, cheap electroincs',
+  keywords: 'mango, buy alphonso mango,ratnagiri mango, devgad mango',
 };
 
 export default Meta;

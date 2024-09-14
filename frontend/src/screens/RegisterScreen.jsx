@@ -49,7 +49,7 @@ const RegisterScreen = () => {
   };
 
   return (
-    <FormContainer>
+    <div className='register-container'>
       <h1>Register</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className='my-2' controlId='name'>
@@ -106,7 +106,7 @@ const RegisterScreen = () => {
           </Link>
         </Col>
       </Row>
-    </FormContainer>
+    </div>
   );
 };
 

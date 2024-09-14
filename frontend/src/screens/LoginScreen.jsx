@@ -42,7 +42,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <FormContainer>
+    <div className='login-container'>
       <h1>Sign In</h1>
 
       <Form onSubmit={submitHandler}>
@@ -81,7 +81,7 @@ const LoginScreen = () => {
           </Link>
         </Col>
       </Row>
-    </FormContainer>
+    </div>
   );
 };
 

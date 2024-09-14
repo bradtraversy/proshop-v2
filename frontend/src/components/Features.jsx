@@ -12,7 +12,7 @@ const Features = () => {
                             </div>
                             <div className="featurs-content text-center">
                                 <h5>Free Shipping</h5>
-                                <p className="mb-0">Free on order over Rs.300</p>
+                                <p className="mb-0">Free on order over Rs.800</p>
                             </div>
                         </div>
                     </div>
@@ -33,8 +33,8 @@ const Features = () => {
                                 <i className="fas fa-exchange-alt fa-3x text-white"></i>
                             </div>
                             <div className="featurs-content text-center">
-                                <h5>30 Day Return</h5>
-                                <p className="mb-0">30 day money guarantee</p>
+                                <h5>7 Day Return</h5>
+                                <p className="mb-0">7 day money guarantee</p>
                             </div>
                         </div>
                     </div>

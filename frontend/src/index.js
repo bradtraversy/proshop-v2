@@ -31,7 +31,10 @@ import UserEditScreen from './screens/admin/UserEditScreen';
 import store from './store';
 import { Provider } from 'react-redux';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-import About from './components/About';
+import LoginScreen from './screens/LoginScreen';
+import ProductItem from './screens/ProductItem';
+import Contact from './components/Contact';
+import MyOrder from './screens/MyOrder';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,8 +48,9 @@ const router = createBrowserRouter(
       />
       <Route path='/product/:id' element={<ProductScreen />} />
       <Route path='/cart' element={<CartScreen />} />
-      <Route path='/about' element={<About />} />
-      {/* <Route path='/login' element={<LoginScreen />} /> */}
+      <Route path='/contact' element={<Contact/>} />
+      <Route path='/shop' element={<ProductItem/>} />
+      <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
       {/* Registered users */}
       <Route path='' element={<PrivateRoute />}>
@@ -55,6 +59,8 @@ const router = createBrowserRouter(
         <Route path='/placeorder' element={<PlaceOrderScreen />} />
         <Route path='/order/:id' element={<OrderScreen />} />
         <Route path='/profile' element={<ProfileScreen />} />
+        <Route path='/myorder' element={<MyOrder />} />
+
       </Route>
       {/* Admin users */}
       <Route path='' element={<AdminRoute />}>

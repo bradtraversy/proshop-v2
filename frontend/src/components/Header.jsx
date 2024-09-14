@@ -1,4 +1,4 @@
-import {  Nav,Badge, Dropdown, Modal, Button,  Form, InputGroup } from 'react-bootstrap';
+import { Nav, Badge, Dropdown, Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, Link, useParams } from 'react-router-dom';
@@ -7,7 +7,6 @@ import { logout } from '../slices/authSlice';
 import { resetCart } from '../slices/cartSlice';
 import React, { useState } from 'react';
 import { CiSearch } from "react-icons/ci";
-import LoginScreen from '../screens/LoginScreen';
 
 
 const navLinks = [
@@ -21,14 +20,13 @@ const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
   const [show, setShow] = useState(false);
-  const [modalShow, setModalShow] = React.useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [logoutApiCall] = useLogoutMutation();
   const { keyword: urlKeyword } = useParams();
-  
+
 
   // FIX: uncontrolled input - urlKeyword may be undefined
   const [keyword, setKeyword] = useState(urlKeyword || '');
@@ -38,6 +36,7 @@ const Header = () => {
     if (keyword) {
       navigate(`/search/${keyword.trim()}`);
       setKeyword('');
+      window.scrollBy(0, 1000);
     } else {
       navigate('/');
     }
@@ -84,6 +83,23 @@ const Header = () => {
                 </Badge>
               )}
             </Nav.Link>
+
+
+            {userInfo && userInfo.isAdmin && (
+
+              <Dropdown className='custom-dropdown' >
+                <Dropdown.Toggle className='bg-transparent border-0 text-primary ' id="dropdown-basic">
+                  Admin
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="/admin/productlist">Products</Dropdown.Item>
+                  <Dropdown.Item href='/admin/orderlist'  >Orders</Dropdown.Item>
+                  <Dropdown.Item href='/admin/userlist'  >Users</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+
             {userInfo ? (
               <Dropdown className='custom-dropdown' >
                 <Dropdown.Toggle className='bg-transparent border-0 text-primary ' id="dropdown-basic">
@@ -93,18 +109,19 @@ const Header = () => {
 
                 <Dropdown.Menu>
                   <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+                  <Dropdown.Item href='/myorder' >My Order</Dropdown.Item>
                   <Dropdown.Item onClick={logoutHandler} >Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
 
             ) : (
-              <Button onClick={() => setModalShow(true)}>
+              <Button href='/login'>
                 Login
               </Button>
             )}
           </div>
         </div>
-{/* search form modal */}
+        {/* search form modal */}
         <Modal show={show} onHide={handleClose}>
           <Form onSubmit={submitHandler} >
             <Modal.Body>
@@ -126,20 +143,8 @@ const Header = () => {
             </Modal.Body>
           </Form>
         </Modal>
-      {/* login form modal */}
-
-        <Modal centered show={modalShow}
-        onHide={() => setModalShow(false)}>
-          <Form onSubmit={submitHandler} >
-            <Modal.Body>
-              <LoginScreen/>
-            </Modal.Body>
-          </Form>
-        </Modal>
-
-        {/* Register modal */}
-
         
+
       </div>
     </>
   );

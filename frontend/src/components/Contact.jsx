@@ -1,6 +1,6 @@
 import React from 'react'
 
-const About = () => {
+const Contact = () => {
     return (
         <div className="container-fluid contact  ">
             <div className="container py-5 ">
@@ -56,4 +56,4 @@ const About = () => {
     )
 }
 
-export default About
+export default Contact
