@@ -18,6 +18,7 @@ const HomeScreen = () => {
           <Meta />
           <HeroSection />
           <Features />
+         
           <ProductItem/>
         </>
       )}

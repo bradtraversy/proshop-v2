@@ -68,8 +68,24 @@ const Header = () => {
           <Nav.Link as={Link} to='/'>
             <h1 className="text-primary display-6">MangoHub</h1>
           </Nav.Link>
+
+          
           <div className='d-flex justify-content-between align-items-center gap-2' >
             <CiSearch onClick={handleShow} fontSize={20} />
+            
+            {/* <Dropdown className='custom-dropdown' >
+            <Dropdown.Toggle className='bg-transparent border-0  ' id="myDropdown">
+                Shop
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="/shop">All Product</Dropdown.Item>
+                  <Dropdown.Item>Devgad</Dropdown.Item>
+                  <Dropdown.Item>Ratnagiri</Dropdown.Item>
+                  <Dropdown.Item>Totapuri</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown> */}
+
             {navLinks?.map((link) => (
               <Nav.Link as={Link} key={link.id} to={`/${link.id}`}>
                 {link.name}
@@ -83,7 +99,8 @@ const Header = () => {
                 </Badge>
               )}
             </Nav.Link>
-
+            
+           
 
             {userInfo && userInfo.isAdmin && (
 
