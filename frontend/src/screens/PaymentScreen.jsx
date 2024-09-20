@@ -28,8 +28,11 @@ const PaymentScreen = () => {
   };
 
   return (
-    <FormContainer>
+    <div>
+      <div className="mb-5">
       <CheckoutSteps step1 step2 step3 />
+      </div>
+    <FormContainer>
       <h1>Payment Method</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group>
@@ -53,6 +56,7 @@ const PaymentScreen = () => {
         </Button>
       </Form>
     </FormContainer>
+    </div>
   );
 };
 

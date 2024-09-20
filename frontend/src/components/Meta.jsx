@@ -6,14 +6,15 @@ const Meta = ({ title, description, keywords }) => {
       <title>{title}</title>
       <meta name='description' content={description} />
       <meta name='keyword' content={keywords} />
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
     </Helmet>
   );
 };
 
 Meta.defaultProps = {
-  title: 'Welcome To ProShop',
+  title: 'MangoHub',
   description: 'We sell the best products for cheap',
-  keywords: 'electronics, buy electronics, cheap electroincs',
+  keywords: 'mango, buy alphonso mango,ratnagiri mango, devgad mango',
 };
 
 export default Meta;

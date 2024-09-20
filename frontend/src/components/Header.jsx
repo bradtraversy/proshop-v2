@@ -1,21 +1,52 @@
-import { Navbar, Nav, Container, NavDropdown, Badge } from 'react-bootstrap';
+import { Nav, Badge, Dropdown, Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import { useLogoutMutation } from '../slices/usersApiSlice';
 import { logout } from '../slices/authSlice';
-import SearchBox from './SearchBox';
-import logo from '../assets/logo.png';
 import { resetCart } from '../slices/cartSlice';
+import React, { useState } from 'react';
+import { CiSearch } from "react-icons/ci";
+
+
+const navLinks = [
+  { name: "Home", id: "" },
+  { name: "Shop", id: "shop" },
+  { name: "About", id: "about" },
+  { name: "Contact", id: "contact" }
+]
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
+  const [show, setShow] = useState(false);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [logoutApiCall] = useLogoutMutation();
+  const { keyword: urlKeyword } = useParams();
+
+
+  // FIX: uncontrolled input - urlKeyword may be undefined
+  const [keyword, setKeyword] = useState(urlKeyword || '');
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (keyword) {
+      navigate(`/search/${keyword.trim()}`);
+      setKeyword('');
+      window.scrollBy(0, 1000);
+    } else {
+      navigate('/');
+    }
+    handleClose()
+  };
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
 
   const logoutHandler = async () => {
     try {
@@ -31,61 +62,108 @@ const Header = () => {
   };
 
   return (
-    <header>
-      <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
-        <Container>
-          <Navbar.Brand as={Link} to='/'>
-            <img src={logo} alt='ProShop' />
-            ProShop
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls='basic-navbar-nav' />
-          <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='ms-auto'>
-              <SearchBox />
-              <Nav.Link as={Link} to='/cart'>
-                <FaShoppingCart /> Cart
-                {cartItems.length > 0 && (
-                  <Badge pill bg='success' style={{ marginLeft: '5px' }}>
-                    {cartItems.reduce((a, c) => a + c.qty, 0)}
-                  </Badge>
-                )}
-              </Nav.Link>
-              {userInfo ? (
-                <>
-                  <NavDropdown title={userInfo.name} id='username'>
-                    <NavDropdown.Item as={Link} to='/profile'>
-                      Profile
-                    </NavDropdown.Item>
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                  </NavDropdown>
-                </>
-              ) : (
-                <Nav.Link as={Link} to='/login'>
-                  <FaUser /> Sign In
-                </Nav.Link>
-              )}
+    <>
+      <div className='container'>
+        <div className='d-flex justify-content-between align-items-center py-3' >
+          <Nav.Link as={Link} to='/'>
+            <h1 className="text-primary display-6">MangoHub</h1>
+          </Nav.Link>
 
-              {/* Admin Links */}
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title='Admin' id='adminmenu'>
-                  <NavDropdown.Item as={Link} to='/admin/productlist'>
-                    Products
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to='/admin/orderlist'>
-                    Orders
-                  </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to='/admin/userlist'>
-                    Users
-                  </NavDropdown.Item>
-                </NavDropdown>
+          
+          <div className='d-flex justify-content-between align-items-center gap-2' >
+            <CiSearch onClick={handleShow} fontSize={20} />
+            
+            {/* <Dropdown className='custom-dropdown' >
+            <Dropdown.Toggle className='bg-transparent border-0  ' id="myDropdown">
+                Shop
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="/shop">All Product</Dropdown.Item>
+                  <Dropdown.Item>Devgad</Dropdown.Item>
+                  <Dropdown.Item>Ratnagiri</Dropdown.Item>
+                  <Dropdown.Item>Totapuri</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown> */}
+
+            {navLinks?.map((link) => (
+              <Nav.Link as={Link} key={link.id} to={`/${link.id}`}>
+                {link.name}
+              </Nav.Link>
+            ))}
+            <Nav.Link as={Link} to='/cart'>
+              <FaShoppingCart fontSize={20} />
+              {cartItems.length > 0 && (
+                <Badge pill bg='success'>
+                  {cartItems.reduce((a, c) => a + c.qty, 0)}
+                </Badge>
               )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </header>
+            </Nav.Link>
+            
+           
+
+            {userInfo && userInfo.isAdmin && (
+
+              <Dropdown className='custom-dropdown' >
+                <Dropdown.Toggle className='bg-transparent border-0 text-primary ' id="dropdown-basic">
+                  Admin
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="/admin/productlist">Products</Dropdown.Item>
+                  <Dropdown.Item href='/admin/orderlist'  >Orders</Dropdown.Item>
+                  <Dropdown.Item href='/admin/userlist'  >Users</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+
+            {userInfo ? (
+              <Dropdown className='custom-dropdown' >
+                <Dropdown.Toggle className='bg-transparent border-0 text-primary ' id="dropdown-basic">
+                  {userInfo.name} {" "}
+                  <FaUser fontSize={15} />
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  <Dropdown.Item href="/profile">Profile</Dropdown.Item>
+                  <Dropdown.Item href='/myorder' >My Order</Dropdown.Item>
+                  <Dropdown.Item onClick={logoutHandler} >Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+
+            ) : (
+              <Button href='/login'>
+                Login
+              </Button>
+            )}
+          </div>
+        </div>
+        {/* search form modal */}
+        <Modal show={show} onHide={handleClose}>
+          <Form onSubmit={submitHandler} >
+            <Modal.Body>
+              <InputGroup >
+                <Form.Control
+                  aria-label="Default"
+                  aria-describedby="inputGroup-sizing-default"
+                  type='text'
+                  name='q'
+                  onChange={(e) => setKeyword(e.target.value)}
+                  value={keyword}
+                  placeholder='Search Products...'
+                  className='border-none bg-transparent search-input'
+                />
+                <Button className='search-button' type="submit">
+                  Search
+                </Button>
+              </InputGroup>
+            </Modal.Body>
+          </Form>
+        </Modal>
+        
+
+      </div>
+    </>
   );
 };
 

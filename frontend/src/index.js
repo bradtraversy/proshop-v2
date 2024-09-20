@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './assets/styles/bootstrap.custom.css';
 import './assets/styles/index.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/styles/custom.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
@@ -17,7 +17,6 @@ import AdminRoute from './components/AdminRoute';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
 import CartScreen from './screens/CartScreen';
-import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ShippingScreen from './screens/ShippingScreen';
 import PaymentScreen from './screens/PaymentScreen';
@@ -32,6 +31,10 @@ import UserEditScreen from './screens/admin/UserEditScreen';
 import store from './store';
 import { Provider } from 'react-redux';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import LoginScreen from './screens/LoginScreen';
+import ProductItem from './screens/ProductItem';
+import Contact from './components/Contact';
+import MyOrder from './screens/MyOrder';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,6 +48,8 @@ const router = createBrowserRouter(
       />
       <Route path='/product/:id' element={<ProductScreen />} />
       <Route path='/cart' element={<CartScreen />} />
+      <Route path='/contact' element={<Contact/>} />
+      <Route path='/shop' element={<ProductItem/>} />
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
       {/* Registered users */}
@@ -54,6 +59,8 @@ const router = createBrowserRouter(
         <Route path='/placeorder' element={<PlaceOrderScreen />} />
         <Route path='/order/:id' element={<OrderScreen />} />
         <Route path='/profile' element={<ProfileScreen />} />
+        <Route path='/myorder' element={<MyOrder />} />
+
       </Route>
       {/* Admin users */}
       <Route path='' element={<AdminRoute />}>
