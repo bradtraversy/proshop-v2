@@ -16,7 +16,7 @@ const HomeScreen = () => {
     keyword,
     pageNumber,
   });
-
+  console.log('data', data);
   return (
     <>
       {!keyword ? (
