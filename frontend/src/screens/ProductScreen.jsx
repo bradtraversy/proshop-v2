@@ -21,6 +21,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import { addToCart } from '../slices/cartSlice';
+import StarRating from '../components/StarRating';
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -180,7 +181,7 @@ const ProductScreen = () => {
                     <Form onSubmit={submitHandler}>
                       <Form.Group className='my-2' controlId='rating'>
                         <Form.Label>Rating</Form.Label>
-                        <Form.Control
+                        {/* <Form.Control
                           as='select'
                           required
                           value={rating}
@@ -192,7 +193,13 @@ const ProductScreen = () => {
                           <option value='3'>3 - Good</option>
                           <option value='4'>4 - Very Good</option>
                           <option value='5'>5 - Excellent</option>
-                        </Form.Control>
+                        </Form.Control> */}
+
+
+                        <StarRating value={rating} onChange={(value) => setRating(value)} />
+                        {rating > 0 && <p>Selected Rating: {rating} Star{rating > 1 ? 's' : ''}</p>}
+
+
                       </Form.Group>
                       <Form.Group className='my-2' controlId='comment'>
                         <Form.Label>Comment</Form.Label>
