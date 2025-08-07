@@ -9,12 +9,14 @@ import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import cors from "cors"
 
 const port = process.env.PORT || 5000;
 
 connectDB();
 
 const app = express();
+app.use(cors())
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -31,7 +33,7 @@ app.get('/api/config/paypal', (req, res) =>
 
 if (process.env.NODE_ENV === 'production') {
   const __dirname = path.resolve();
-  app.use('/uploads', express.static('/var/data/uploads'));
+  app.use('/uploads', express.static('../uploads'));
   app.use(express.static(path.join(__dirname, '/frontend/build')));
 
   app.get('*', (req, res) =>
