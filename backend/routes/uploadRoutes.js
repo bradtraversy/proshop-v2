@@ -31,17 +31,23 @@ function fileFilter(req, file, cb) {
 }
 
 const upload = multer({ storage, fileFilter });
-const uploadSingleImage = upload.single('image');
+const uploadMultipleImages = upload.array('images', 5); // field name = 'images', max 5 files
 
 router.post('/', (req, res) => {
-  uploadSingleImage(req, res, function (err) {
+  uploadMultipleImages(req, res, function (err) {
     if (err) {
       return res.status(400).send({ message: err.message });
     }
 
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).send({ message: 'No files uploaded' });
+    }
+
+    const imagePaths = req.files.map(file => `/${file.path}`);
+
     res.status(200).send({
-      message: 'Image uploaded successfully',
-      image: `/${req.file.path}`,
+      message: 'Images uploaded successfully',
+      images: imagePaths,
     });
   });
 });

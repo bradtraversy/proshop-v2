@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Image } from 'react-bootstrap';
 import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import FormContainer from '../../components/FormContainer';
@@ -16,7 +16,7 @@ const ProductEditScreen = () => {
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
-  const [image, setImage] = useState('');
+  const [images, setImages] = useState([]);
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
@@ -37,6 +37,18 @@ const ProductEditScreen = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (product) {
+      setName(product.name);
+      setPrice(product.price);
+      setImages(product.image || []);
+      setBrand(product.brand);
+      setCategory(product.category);
+      setCountInStock(product.countInStock);
+      setDescription(product.description);
+    }
+  }, [product]);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -44,12 +56,12 @@ const ProductEditScreen = () => {
         productId,
         name,
         price,
-        image,
+        image: images,
         brand,
         category,
         description,
         countInStock,
-      }).unwrap(); // NOTE: here we need to unwrap the Promise to catch any rejection in our catch block
+      }).unwrap();
       toast.success('Product updated');
       refetch();
       navigate('/admin/productlist');
@@ -58,28 +70,23 @@ const ProductEditScreen = () => {
     }
   };
 
-  useEffect(() => {
-    if (product) {
-      setName(product.name);
-      setPrice(product.price);
-      setImage(product.image);
-      setBrand(product.brand);
-      setCategory(product.category);
-      setCountInStock(product.countInStock);
-      setDescription(product.description);
-    }
-  }, [product]);
-
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
-    formData.append('image', e.target.files[0]);
+    for (let i = 0; i < e.target.files.length; i++) {
+      formData.append('images', e.target.files[i]);
+    }
+
     try {
       const res = await uploadProductImage(formData).unwrap();
       toast.success(res.message);
-      setImage(res.image);
+      setImages((prev) => [...prev, ...res.images]);
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
+  };
+
+  const removeImage = (img) => {
+    setImages(images.filter((image) => image !== img));
   };
 
   return (
@@ -93,90 +100,100 @@ const ProductEditScreen = () => {
         {isLoading ? (
           <Loader />
         ) : error ? (
-          <Message variant='danger'>{error.data.message}</Message>
+          <Message variant='danger'>
+            {error?.data?.message || error?.error}
+          </Message>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='name'>
               <Form.Label>Name</Form.Label>
               <Form.Control
-                type='name'
-                placeholder='Enter name'
+                type='text'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
+              />
             </Form.Group>
 
             <Form.Group controlId='price'>
               <Form.Label>Price</Form.Label>
               <Form.Control
                 type='number'
-                placeholder='Enter price'
                 value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              ></Form.Control>
+                onChange={(e) => setPrice(Number(e.target.value))}
+              />
             </Form.Group>
 
             <Form.Group controlId='image'>
-              <Form.Label>Image</Form.Label>
+              <Form.Label>Images</Form.Label>
               <Form.Control
-                type='text'
-                placeholder='Enter image url'
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <Form.Control
-                label='Choose File'
-                onChange={uploadFileHandler}
                 type='file'
-              ></Form.Control>
+                multiple
+                onChange={uploadFileHandler}
+              />
               {loadingUpload && <Loader />}
+              <div className='d-flex flex-wrap mt-2'>
+                {images.map((img, index) => (
+                  <div
+                    key={index}
+                    className='position-relative m-2 border'
+                    style={{ width: '100px', height: '100px' }}
+                  >
+                    <Image
+                      src={img}
+                      alt='uploaded'
+                      fluid
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                    <Button
+                      variant='danger'
+                      size='sm'
+                      onClick={() => removeImage(img)}
+                      className='position-absolute top-0 end-0'
+                    >
+                      ×
+                    </Button>
+                  </div>
+                ))}
+              </div>
             </Form.Group>
 
             <Form.Group controlId='brand'>
               <Form.Label>Brand</Form.Label>
               <Form.Control
                 type='text'
-                placeholder='Enter brand'
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
-              ></Form.Control>
+              />
             </Form.Group>
 
             <Form.Group controlId='countInStock'>
               <Form.Label>Count In Stock</Form.Label>
               <Form.Control
                 type='number'
-                placeholder='Enter countInStock'
                 value={countInStock}
-                onChange={(e) => setCountInStock(e.target.value)}
-              ></Form.Control>
+                onChange={(e) => setCountInStock(Number(e.target.value))}
+              />
             </Form.Group>
 
             <Form.Group controlId='category'>
               <Form.Label>Category</Form.Label>
               <Form.Control
                 type='text'
-                placeholder='Enter category'
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-              ></Form.Control>
+              />
             </Form.Group>
 
             <Form.Group controlId='description'>
               <Form.Label>Description</Form.Label>
               <Form.Control
                 type='text'
-                placeholder='Enter description'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
+              />
             </Form.Group>
 
-            <Button
-              type='submit'
-              variant='primary'
-              style={{ marginTop: '1rem' }}
-            >
+            <Button type='submit' variant='primary' className='mt-3'>
               Update
             </Button>
           </Form>
