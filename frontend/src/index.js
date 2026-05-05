@@ -32,6 +32,7 @@ import UserEditScreen from './screens/admin/UserEditScreen';
 import store from './store';
 import { Provider } from 'react-redux';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -77,7 +78,9 @@ root.render(
     <HelmetProvider>
       <Provider store={store}>
         <PayPalScriptProvider deferLoading={true}>
-          <RouterProvider router={router} />
+          <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+            <RouterProvider router={router} />
+          </GoogleOAuthProvider>
         </PayPalScriptProvider>
       </Provider>
     </HelmetProvider>

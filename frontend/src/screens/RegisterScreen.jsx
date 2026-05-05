@@ -4,6 +4,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
+import GoogleLoginButton from '../components/GoogleLoginButton';
 
 import { useRegisterMutation } from '../slices/usersApiSlice';
 import { setCredentials } from '../slices/authSlice';
@@ -97,6 +98,8 @@ const RegisterScreen = () => {
 
         {isLoading && <Loader />}
       </Form>
+
+      <GoogleLoginButton redirect={redirect} />
 
       <Row className='py-3'>
         <Col>
