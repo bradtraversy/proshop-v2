@@ -2,9 +2,10 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5000",
+  "proxy": "http://localhost:5001",
   "dependencies": {
     "@paypal/react-paypal-js": "^7.8.2",
+    "@react-oauth/google": "^0.13.5",
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

@@ -1,6 +1,9 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import generateToken from '../utils/generateToken.js';
 import User from '../models/userModel.js';
+import { OAuth2Client } from 'google-auth-library';
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // @desc    Auth user & get token
 // @route   POST /api/users/auth
@@ -48,6 +51,49 @@ const registerUser = asyncHandler(async (req, res) => {
     generateToken(res, user._id);
 
     res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+    });
+  } else {
+    res.status(400);
+    throw new Error('Invalid user data');
+  }
+});
+
+// @desc    Auth user with Google
+// @route   POST /api/users/google
+// @access  Public
+const authGoogle = asyncHandler(async (req, res) => {
+  const { idToken } = req.body;
+
+  const ticket = await client.verifyIdToken({
+    idToken,
+    audience: process.env.GOOGLE_CLIENT_ID,
+  });
+
+  const { name, email, sub: googleId } = ticket.getPayload();
+
+  let user = await User.findOne({ email });
+
+  if (user) {
+    if (!user.googleId) {
+      user.googleId = googleId;
+      await user.save();
+    }
+  } else {
+    user = await User.create({
+      name,
+      email,
+      googleId,
+    });
+  }
+
+  if (user) {
+    generateToken(res, user._id);
+
+    res.status(200).json({
       _id: user._id,
       name: user.name,
       email: user.email,
@@ -182,6 +228,7 @@ const updateUser = asyncHandler(async (req, res) => {
 export {
   authUser,
   registerUser,
+  authGoogle,
   logoutUser,
   getUserProfile,
   updateUserProfile,
