@@ -56,6 +56,9 @@ const Header = () => {
                     <NavDropdown.Item as={Link} to='/profile'>
                       Profile
                     </NavDropdown.Item>
+                    <NavDropdown.Item href='/gdpr'>
+                      Privacy checks
+                    </NavDropdown.Item>
                     <NavDropdown.Item onClick={logoutHandler}>
                       Logout
                     </NavDropdown.Item>
